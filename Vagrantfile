@@ -121,6 +121,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.ami = ec2_ami
     aws.security_groups = ec2_security_groups
     aws.subnet_id = ec2_subnet_id
+    # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/block-device-mapping-concepts.html
+    # [EBS volumes] Whether to delete the volume on instance termination (true or false). The default value is true for the root device volume and false for attached volumes. When you create an AMI, its block device mapping inherits this setting from the instance. When you launch an instance, it inherits this setting from the AMI.
+    aws.block_device_mapping = [{ 'DeviceName' => '/dev/sda1', 'Ebs.VolumeSize' => 20 }]
     # If a subnet is specified, default to turning on a public IP unless the
     # user explicitly specifies the option. Without a public IP, Vagrant won't
     # be able to SSH into the hosts unless Vagrant is also running in the VPC.
